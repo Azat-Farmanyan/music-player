@@ -1,0 +1,11 @@
+.active-row {
+  background-color: #4caf50; /* Change this to the color you prefer */
+  color: #fff; /* Change text color if needed */
+}
+.audio-row {
+  cursor: pointer;
+  &:hover {
+    background-color: #4caf50;
+    color: #fff;
+  }
+}
