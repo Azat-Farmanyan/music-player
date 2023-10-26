@@ -1,29 +1,56 @@
-<table mat-table [dataSource]="songs" class="mat-elevation-z8">
-  <!-- ID Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let song">{{ song.id }}</td>
-  </ng-container>
+<div class="player">
+  <div class="player-body">
+    <div class="table-container">
+      <table mat-table [dataSource]="songs" scroll='true' class="mat-elevation-z8 audio-list">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let song">{{ song.id }}</td>
+        </ng-container>
 
-  <!-- Title Column -->
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef>Title</th>
-    <td mat-cell *matCellDef="let song">{{ song.title }}</td>
-  </ng-container>
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <td mat-cell *matCellDef="let song">{{ song.title }}</td>
+        </ng-container>
 
-  <!-- Artist Column -->
-  <ng-container matColumnDef="artist">
-    <th mat-header-cell *matHeaderCellDef>Artist</th>
-    <td mat-cell *matCellDef="let song">{{ song.artist }}</td>
-  </ng-container>
+        <!-- Artist Column -->
+        <ng-container matColumnDef="artist">
+          <th mat-header-cell *matHeaderCellDef>Artist</th>
+          <td mat-cell *matCellDef="let song">{{ song.artist }}</td>
+        </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClick(row)"
-    [ngClass]="{ 'active-row': row === activeRow }" class="audio-row"></tr>
-</table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClick(row)"
+          [ngClass]="{ 'active-row': row === activeRow }" class="audio-row"></tr>
+      </table>
+    </div>
 
-<audio *ngIf="activeRow" id="audioPlayer" controls style="display: none;">
-  <source [src]="activeRow.audioSource" type="audio/mp3">
-</audio>
 
-<button mat-button (click)="playPause()">{{ pause ? 'Pause' : 'Play'}}</button>
+    <audio *ngIf="activeRow" id="audioPlayer" controls style="display: none;">
+      <source [src]="activeRow.audioSource" type="audio/mp3">
+    </audio>
+    <!-- *ngIf="audioPlayer" -->
+
+
+    <div class="control-panel" [ngClass]="{'show': audioPlayer}">
+      <p class='title'>
+        {{activeRow.title }} | {{activeRow.artist}}
+      </p>
+      <div class="btns">
+        <button (click)="prev()" color="primary">
+          <img src="../../../assets/icons/prev.svg" alt="prev">
+        </button>
+
+        <button (click)="playPause()" class='play-pause'>
+          <img *ngIf="!pause" src="../../../assets/icons/play.svg" alt="play">
+          <img *ngIf="pause" src="../../../assets/icons/pause.svg" alt="pause">
+        </button>
+        <button (click)="next()">
+          <img src="../../../assets/icons/next.svg" alt="next">
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
